@@ -3,7 +3,7 @@ window.SITE_CONFIG = {
   // URL of the Google Apps Script web app that stores signatures
   // (see README.md, "Connect the signature sheet"). Leave empty to run
   // the form in demo mode, where nothing is saved.
-  signatureEndpoint: "",
+  signatureEndpoint: "https://script.google.com/macros/s/AKfycbzozLdgyXz-5NsD8FP38_oA4pZIFn6mUosxIL8JKwMypGfxqY1Vjz6x6nV5QK2jOUtD/exec",
 
   // Set to true once the open letter text is pasted into index.html
   // (the block with id="letter-final"). While false, the page explains the
