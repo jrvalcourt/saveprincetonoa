@@ -134,7 +134,7 @@
         return ["Enter a four-digit year, like 2012.", yearInput];
       }
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return ["Enter a valid email address so we can add you to the campaign's mailing list.", $("#f-email")];
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return ["Check your email address, or leave it blank.", $("#f-email")];
     return null;
   }
 

@@ -105,7 +105,7 @@ function doPost(e) {
   if ((aff === 'alum' || aff === 'student' || aff === 'grad' || aff === 'gradstudent') && !year) {
     return json_({ ok: false, error: 'Enter your class year.' });
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json_({ ok: false, error: 'Enter a valid email address.' });
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json_({ ok: false, error: 'Check your email address, or leave it blank.' });
 
   var lock = LockService.getScriptLock();
   try {
@@ -118,10 +118,10 @@ function doPost(e) {
     var sheet = getSheet_();
     var row = [new Date(), name, aff, year, oa, email, comment, pub, false, false];
 
-    // One message per email address: posting again updates the existing row.
+    // Email is optional. When given, one entry per email address: adding again updates the existing row.
     var last = sheet.getLastRow();
     var updated = false;
-    if (last > 1) {
+    if (email && last > 1) {
       var emails = sheet.getRange(2, COL.email + 1, last - 1, 1).getValues();
       for (var i = 0; i < emails.length; i++) {
         if (String(emails[i][0]).toLowerCase() === email) {
