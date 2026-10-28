@@ -23,7 +23,7 @@ var HEADERS = ['Timestamp', 'Name', 'Affiliation', 'Class year', 'OA involvement
 var COL = { ts: 0, name: 1, aff: 2, year: 3, oa: 4, email: 5, comment: 6, pub: 7, hidden: 8, approved: 9 };
 
 var AFFILIATIONS = ['alum', 'grad', 'student', 'gradstudent', 'parent', 'facstaff', 'friend'];
-var OA_ROLES = ['', 'trip', 'leader', 'trainer', 'support', 'other', 'none'];
+var OA_ROLES = ['', 'trip', 'leader', 'trainer', 'support', 'command', 'other', 'none'];
 
 /** Run once from the Apps Script editor to create the header row. */
 function setup() {
