@@ -49,6 +49,29 @@
       "&body=" + encodeURIComponent(shareText);
   }
 
+  /* ---------- Mobile menu ---------- */
+
+  var menuBtn = $("[data-menu-toggle]");
+  var nav = $("#site-nav");
+  function setMenu(open) {
+    nav.classList.toggle("open", open);
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", function () {
+      setMenu(menuBtn.getAttribute("aria-expanded") !== "true");
+    });
+    $$("a", nav).forEach(function (a) {
+      a.addEventListener("click", function () { setMenu(false); });
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && nav.classList.contains("open")) { setMenu(false); menuBtn.focus(); }
+    });
+    document.addEventListener("click", function (ev) {
+      if (nav.classList.contains("open") && !nav.contains(ev.target) && !menuBtn.contains(ev.target)) setMenu(false);
+    });
+  }
+
   /* ---------- Copy buttons ---------- */
 
   var toastEl = $("[data-toast]");
