@@ -1,16 +1,16 @@
 /**
- * Signature backend for saveprincetonoa.com
+ * Supporter list backend for saveprincetonoa.com
  *
- * Stores open-letter signatures in the Google Sheet this script is bound to,
- * and serves the public list of signers back to the website.
- * Setup steps are in README.md ("Connect the signature sheet").
+ * Stores supporters' names and optional messages in the Google Sheet this script is bound to,
+ * and serves the public list back to the website.
+ * Setup steps are in README.md ("Connect the message sheet").
  *
  * Sheet columns:
  *   Timestamp | Name | Affiliation | Class year | OA involvement | Email |
  *   Comment | Show publicly | Hidden | Approved
  *
- * To remove a signature (and its public message) from the site: tick its "Hidden" box.
- * To review every signature before it appears: set REQUIRE_APPROVAL = true,
+ * To remove a message from the site: tick its "Hidden" box.
+ * To review every message before it appears: set REQUIRE_APPROVAL = true,
  * then tick "Approved" on each row you want shown (and counted).
  */
 
@@ -53,7 +53,7 @@ function clean_(value, maxLen) {
 
 function isTrue_(v) { return v === true || String(v).toUpperCase() === 'TRUE'; }
 
-/** GET: public list of signers. */
+/** GET: public list of messages. */
 function doGet() {
   var cache = CacheService.getScriptCache();
   var cached = cache.get('signers');
@@ -84,7 +84,7 @@ function doGet() {
   return ContentService.createTextOutput(body).setMimeType(ContentService.MimeType.JSON);
 }
 
-/** POST: add or update a signature. */
+/** POST: add or update a message. */
 function doPost(e) {
   var p = (e && e.parameter) || {};
 
@@ -97,7 +97,7 @@ function doPost(e) {
   var oa = OA_ROLES.indexOf(p.oaRole || '') >= 0 ? (p.oaRole || '') : '';
   var email = String(p.email || '').trim().toLowerCase().slice(0, 120);
   var comment = clean_(p.comment, 500);
-  var pub = true; // every signature is public; untick "Show publicly" in the sheet to unlist one by hand
+  var pub = true; // every message is public; untick "Show publicly" in the sheet to unlist one by hand
 
   if (name.length < 2) return json_({ ok: false, error: 'Enter your full name.' });
   if (!aff) return json_({ ok: false, error: 'Choose your connection to Princeton.' });
@@ -111,14 +111,14 @@ function doPost(e) {
   try {
     lock.waitLock(10000);
   } catch (err) {
-    return json_({ ok: false, error: 'The signature list is busy. Try again in a moment.' });
+    return json_({ ok: false, error: 'The message board is busy. Try again in a moment.' });
   }
 
   try {
     var sheet = getSheet_();
     var row = [new Date(), name, aff, year, oa, email, comment, pub, false, false];
 
-    // One signature per email address: re-signing updates the existing row.
+    // One message per email address: posting again updates the existing row.
     var last = sheet.getLastRow();
     var updated = false;
     if (last > 1) {

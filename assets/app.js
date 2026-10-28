@@ -42,13 +42,6 @@
     groupSlot.appendChild(g);
   }
 
-  if (cfg.letterReady) {
-    $("[data-letter-draft]").hidden = true;
-    $("[data-letter-final]").hidden = false;
-    $("[data-form-title]").textContent = "Co-sign this letter";
-    $("[data-done-detail]").textContent = "Thank you. We'll email you when the letter is delivered.";
-  }
-
   var shareMail = $("[data-share-mail]");
   if (shareMail) {
     var shareText = $("#share-text").textContent.trim();
@@ -183,7 +176,7 @@
     }
 
     request.then(function (res) {
-      if (!res || !res.ok) throw new Error((res && res.error) || "The signature wasn't saved.");
+      if (!res || !res.ok) throw new Error((res && res.error) || "Your name wasn't saved.");
       form.hidden = true;
       var done = $("[data-sign-done]");
       done.hidden = false;
@@ -192,7 +185,7 @@
     }).catch(function (err) {
       var msg = err && err.message && err.message.indexOf("Failed to fetch") === -1 && err.message.indexOf("JSON") === -1
         ? err.message
-        : "We couldn't reach the signature list. Check your connection and try again.";
+        : "We couldn't reach the list of supporters. Check your connection and try again.";
       if (cfg.contactEmail) msg += " If it keeps happening, email " + cfg.contactEmail + ".";
       showError(msg);
     }).then(function () {
@@ -229,7 +222,7 @@
     var empty = $("[data-signers-empty]");
     var title = $("[data-signers-title]");
     holder.innerHTML = "";
-    var count = typeof total === "number" ? total : list.length;
+    var count = list.length;
 
     var line = $("[data-count-line]");
     if (count > 0) {
@@ -238,18 +231,10 @@
       var strong = document.createElement("strong");
       strong.textContent = count.toLocaleString();
       line.appendChild(strong);
-      line.appendChild(document.createTextNode(count === 1 ? " person has signed the open letter so far." : " people have signed the open letter so far."));
-      title.textContent = count.toLocaleString() + (count === 1 ? " person has signed" : " people have signed");
+      line.appendChild(document.createTextNode(count === 1 ? " person has added their name in support so far." : " people have added their names in support so far."));
+      title.textContent = count.toLocaleString() + (count === 1 ? " supporter" : " supporters");
     }
-    var unlisted = count - list.length;
-    if (unlisted > 0) {
-      empty.hidden = false;
-      empty.textContent = unlisted === count
-        ? "Signers so far asked not to be listed by name."
-        : unlisted.toLocaleString() + (unlisted === 1 ? " signer asked" : " signers asked") + " not to be listed by name.";
-    } else {
-      empty.hidden = !!list.length;
-    }
+    empty.hidden = !!list.length;
     if (!list.length) return;
 
     var groups = {};

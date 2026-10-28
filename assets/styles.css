@@ -196,7 +196,7 @@ code { font-size: 0.9em; background: var(--paper-2); padding: 0.05em 0.3em; bord
 .signer-group { margin-top: 1.75rem; }
 .signer-group h4 { font-size: 1rem; color: var(--ink-2); border-bottom: 1px solid var(--rule); padding-bottom: 0.4rem; margin-bottom: 0.75rem; }
 .signer-group h4 span { font-weight: 400; }
-.signer-list { list-style: none; padding: 0; margin: 0; columns: 15rem auto; column-gap: 2rem; }
+.signer-list { list-style: none; padding: 0; margin: 0; columns: 20rem auto; column-gap: 2.5rem; }
 .signer-list li { break-inside: avoid; padding: 0.15rem 0; line-height: 1.4; }
 .signer-list .yr { font-family: var(--display); font-weight: 600; color: var(--ink-2); }
 .signer-list .role { font-size: var(--step--1); color: var(--contour); font-family: var(--display); font-weight: 700; margin-left: 0.25rem; }

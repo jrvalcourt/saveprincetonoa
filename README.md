@@ -1,16 +1,16 @@
 # saveprincetonoa.com
 
-Static site for the alumni campaign to keep Outdoor Action in Princeton's first-year Orientation. Hosted on GitHub Pages; signatures are stored in a Google Sheet through a small Google Apps Script.
+Static site for the alumni campaign to keep Outdoor Action in Princeton's first-year Orientation. Hosted on GitHub Pages; messages of support are stored in a Google Sheet through a small Google Apps Script.
 
 ```
-index.html            all page content (actions, letter, research, coverage, FAQ)
-config.js             settings: signature endpoint, letter on/off, Google Group link, contact email
+index.html            all page content (actions, messages of support, research, coverage, FAQ)
+config.js             settings: message endpoint, Google Group link, contact email
 assets/styles.css     design
-assets/app.js         copy buttons, signature form, signer list
+assets/app.js         copy buttons, message form, message list
 assets/topo.svg       header contour artwork
 assets/og-image.png   preview image for links shared by text/email/social
 assets/favicon.svg
-apps-script/Code.gs   signature backend (paste into Google Apps Script)
+apps-script/Code.gs   message backend (paste into Google Apps Script)
 CNAME                 tells GitHub Pages to serve saveprincetonoa.com
 ```
 
@@ -18,9 +18,9 @@ To preview locally: `python3 -m http.server` in this folder, then open http://lo
 
 ---
 
-## 1. Connect the signature sheet (about 10 minutes)
+## 1. Connect the message sheet (about 10 minutes)
 
-1. Create a new Google Sheet (e.g. "OA open letter signatures") in the Google account that should own the data.
+1. Create a new Google Sheet (e.g. "OA messages of support") in the Google account that should own the data.
 2. In the sheet: **Extensions → Apps Script**. Delete the starter code, paste in all of `apps-script/Code.gs`, and save.
 3. In the function dropdown at the top, pick **setup** and click **Run**. Approve the permissions prompt (Google will warn that the app is unverified; choose *Advanced → Go to project*). A "Signatures" tab with headers appears in the sheet.
 4. **Deploy → New deployment**. Gear icon → **Web app**.
@@ -30,9 +30,9 @@ To preview locally: `python3 -m http.server` in this folder, then open http://lo
 5. Paste that URL into `config.js` as `signatureEndpoint`.
 
 Moderating:
-- To remove a signature from the site, tick its **Hidden** box. It disappears within a minute.
-- To approve every signature before it shows, set `REQUIRE_APPROVAL = true` in the script, then tick **Approved** on each row.
-- Each email can sign once; signing again updates the existing row.
+- To remove a message from the site, tick its **Hidden** box. It disappears within a minute.
+- To approve every message before it shows, set `REQUIRE_APPROVAL = true` in the script, then tick **Approved** on each row.
+- Each email can post one message; posting again updates the existing row.
 - If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
 
 ## 2. Publish on GitHub Pages
@@ -66,9 +66,7 @@ The site lists `saveprincetonoa@gmail.com` (set by `contactEmail` in `config.js`
 
 ## Everyday edits
 
-- **Post the open letter:** paste the text into the `id="letter-final"` block in `index.html`, then set `letterReady: true` in `config.js`. The form heading becomes "Co-sign this letter".
 - **Google Group link:** set `googleGroupUrl` in `config.js`.
 - **New coverage:** add an `<li>` to the list under `id="coverage"` in `index.html`.
 - **Action items, FAQ, research:** plain HTML in `index.html`; each item is its own `<article>` or `<details>` block.
 
-Note for the open letter: the *Daily Princetonian* asks that open letters be sent to opinion@dailyprincetonian.com **before** signatures are gathered (text first, then the signature form after editing), and it requires disclosure of any generative AI use in a submission.
