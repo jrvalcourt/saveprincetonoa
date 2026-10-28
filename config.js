@@ -13,7 +13,7 @@ window.SITE_CONFIG = {
 
   // Google Group for organizers and volunteers. Leave empty to show
   // "link coming soon".
-  googleGroupUrl: "",
+  googleGroupUrl: "https://groups.google.com/g/save-princeton-oa",
 
   // Petition started by a current OA leader.
   petitionUrl: "https://c.org/qvktcGtJSr",
