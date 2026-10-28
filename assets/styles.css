@@ -1,6 +1,6 @@
 /* Save Princeton OA
    Palette borrowed from a USGS topo sheet: map paper, contour brown,
-   water blue, and a trail-blaze orange used sparingly. */
+   water blue, and Princeton orange (#E77500, PMS 158) for blazes and buttons. */
 
 :root {
   --paper: #f1f3ec;
@@ -12,8 +12,9 @@
   --rule: #cfd5c6;
   --water: #275f8c;
   --water-dark: #1b4769;
-  --blaze: #e2661b;
-  --blaze-dark: #b94d0e;
+  --blaze: #e77500;        /* Princeton orange, per princeton.edu (PMS 158) */
+  --blaze-dark: #a35300;   /* darker orange for small text on light backgrounds */
+  --blaze-on-dark: #f58025; /* Princeton's orange for use on black */
   --error: #a3261b;
 
   --display: "Overpass", "Helvetica Neue", Arial, sans-serif;
@@ -73,9 +74,10 @@ code { font-size: 0.9em; background: var(--paper-2); padding: 0.05em 0.3em; bord
 .btn {
   display: inline-block; font-family: var(--display); font-weight: 700; font-size: 1rem; line-height: 1;
   padding: 0.95em 1.3em 0.85em; border-radius: 4px; border: 2px solid var(--ink);
-  background: var(--ink); color: #fff; text-decoration: none; cursor: pointer;
+  background: var(--blaze); color: var(--ink); text-decoration: none; cursor: pointer;
 }
-.btn:hover { background: var(--blaze-dark); border-color: var(--blaze-dark); color: #fff; text-decoration: none; }
+.btn:hover { background: var(--ink); border-color: var(--ink); color: #fff; text-decoration: none; }
+::selection { background: var(--blaze); color: var(--ink); }
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
 .btn-small { font-size: 0.9375rem; padding: 0.7em 1em 0.6em; }
@@ -159,7 +161,7 @@ code { font-size: 0.9em; background: var(--paper-2); padding: 0.05em 0.3em; bord
 .live-count strong { color: var(--ink); font-weight: 800; }
 
 /* Independence notice */
-.independence { background: var(--ink); color: #eef1ea; }
+.independence { background: var(--ink); color: #eef1ea; border-top: 5px solid var(--blaze); }
 .independence p { margin: 0; padding: 1.1rem 0; font-size: 1rem; line-height: 1.5; max-width: 60rem; }
 .independence strong { color: #fff; font-family: var(--display); font-weight: 700; }
 
@@ -244,7 +246,7 @@ code { font-size: 0.9em; background: var(--paper-2); padding: 0.05em 0.3em; bord
 .signer-list { list-style: none; padding: 0; margin: 0; columns: 20rem auto; column-gap: 2.5rem; }
 .signer-list li { break-inside: avoid; padding: 0.15rem 0; line-height: 1.4; }
 .signer-list .yr { font-family: var(--display); font-weight: 600; color: var(--ink-2); }
-.signer-list .role { font-size: var(--step--1); color: var(--contour); font-family: var(--display); font-weight: 700; margin-left: 0.25rem; }
+.signer-list .role { font-size: var(--step--1); color: var(--blaze-dark); font-family: var(--display); font-weight: 700; margin-left: 0.25rem; }
 .signer-list .msg { display: block; margin: 0.2rem 0 0.6rem; font-style: italic; font-size: 0.9375rem; color: var(--ink-2); line-height: 1.45; quotes: "\201C" "\201D"; }
 
 /* Research */
@@ -276,8 +278,8 @@ details[open] summary::after { content: "–"; }
 details p { padding-right: 1rem; }
 
 /* Footer */
-.footer { background: var(--ink); color: #d9ded3; padding: 2.5rem 0; font-size: 0.9375rem; }
-.footer a { color: #fff; }
+.footer { background: var(--ink); color: #d9ded3; padding: 2.5rem 0; font-size: 0.9375rem; border-top: 5px solid var(--blaze); }
+.footer a { color: var(--blaze-on-dark); }
 .footer strong { color: #fff; font-family: var(--display); }
 .footer-inner p { max-width: 48rem; }
 
