@@ -23,14 +23,13 @@ var HEADERS = ['Timestamp', 'Name', 'Affiliation', 'Class year', 'OA involvement
 var COL = { ts: 0, name: 1, aff: 2, year: 3, oa: 4, email: 5, comment: 6, pub: 7, hidden: 8, approved: 9 };
 
 var AFFILIATIONS = ['alum', 'grad', 'student', 'gradstudent', 'parent', 'facstaff', 'friend'];
-var OA_ROLES = ['', 'trip', 'leader', 'trainer', 'none'];
+var OA_ROLES = ['', 'trip', 'leader', 'trainer', 'support', 'other', 'none'];
 
 /** Run once from the Apps Script editor to create the header row. */
 function setup() {
   var sheet = getSheet_();
   sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
   sheet.setFrozenRows(1);
-  sheet.getRange(2, COL.pub + 1, sheet.getMaxRows() - 1, 3).insertCheckboxes();
 }
 
 function getSheet_() {
@@ -135,7 +134,14 @@ function doPost(e) {
         }
       }
     }
-    if (!updated) sheet.appendRow(row);
+    if (!updated) {
+      sheet.appendRow(row);
+      // Checkboxes are added per row (not pre-filled down the sheet) so that
+      // new entries land directly under the last real one.
+      var boxes = sheet.getRange(sheet.getLastRow(), COL.pub + 1, 1, 3);
+      boxes.insertCheckboxes();
+      boxes.setValues([[pub, false, false]]);
+    }
 
     CacheService.getScriptCache().remove('signers');
     return json_({ ok: true, updated: updated });

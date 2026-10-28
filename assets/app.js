@@ -16,7 +16,7 @@
     facstaff: "Faculty or staff",
     friend: "Friend of OA"
   };
-  var OA_ROLES = { leader: "OA leader", trainer: "Leader trainer" };
+  var OA_ROLES = { leader: "OA leader", trainer: "Leader trainer", support: "OA Support" };
 
   /* ---------- Config-driven bits ---------- */
 
