@@ -9,9 +9,6 @@ window.SITE_CONFIG = {
   // "link coming soon".
   googleGroupUrl: "https://groups.google.com/g/save-princeton-oa",
 
-  // Petition started by a current OA leader.
-  petitionUrl: "https://c.org/qvktcGtJSr",
-
   // Where people can reach the organizers.
   contactEmail: "saveprincetonoa@gmail.com",
 

@@ -117,34 +117,26 @@ function doPost(e) {
     var sheet = getSheet_();
     var row = [new Date(), name, aff, year, oa, email, comment, pub, false, false];
 
-    // Email is optional. When given, one entry per email address: adding again updates the existing row.
+    // Email is optional. When given, only the first entry for an address is kept.
+    // A repeat submission is silently ignored rather than overwriting the
+    // original, so nobody can change someone else's entry by guessing their
+    // email, and the response never reveals whether an address is on the list.
     var last = sheet.getLastRow();
-    var updated = false;
     if (email && last > 1) {
       var emails = sheet.getRange(2, COL.email + 1, last - 1, 1).getValues();
       for (var i = 0; i < emails.length; i++) {
-        if (String(emails[i][0]).toLowerCase() === email) {
-          var rowNum = i + 2;
-          var existing = sheet.getRange(rowNum, 1, 1, HEADERS.length).getValues()[0];
-          row[COL.hidden] = existing[COL.hidden] === true;      // keep moderation decisions
-          row[COL.approved] = existing[COL.approved] === true;
-          sheet.getRange(rowNum, 1, 1, HEADERS.length).setValues([row]);
-          updated = true;
-          break;
-        }
+        if (String(emails[i][0]).toLowerCase() === email) return json_({ ok: true });
       }
     }
-    if (!updated) {
-      sheet.appendRow(row);
-      // Checkboxes are added per row (not pre-filled down the sheet) so that
-      // new entries land directly under the last real one.
-      var boxes = sheet.getRange(sheet.getLastRow(), COL.pub + 1, 1, 3);
-      boxes.insertCheckboxes();
-      boxes.setValues([[pub, false, false]]);
-    }
+    sheet.appendRow(row);
+    // Checkboxes are added per row (not pre-filled down the sheet) so that
+    // new entries land directly under the last real one.
+    var boxes = sheet.getRange(sheet.getLastRow(), COL.pub + 1, 1, 3);
+    boxes.insertCheckboxes();
+    boxes.setValues([[pub, false, false]]);
 
     CacheService.getScriptCache().remove('signers');
-    return json_({ ok: true, updated: updated });
+    return json_({ ok: true });
   } finally {
     lock.releaseLock();
   }

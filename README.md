@@ -32,7 +32,7 @@ To preview locally: `python3 -m http.server` in this folder, then open http://lo
 Moderating:
 - To remove a message from the site, tick its **Hidden** box. It disappears within a minute.
 - To approve every message before it shows, set `REQUIRE_APPROVAL = true` in the script, then tick **Approved** on each row.
-- Each email can post one message; posting again updates the existing row.
+- Each email address is kept once; later submissions with the same address are ignored (so no one can overwrite another person's entry). To correct an entry, edit the sheet directly.
 - If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
 
 ## 2. Publish on GitHub Pages
