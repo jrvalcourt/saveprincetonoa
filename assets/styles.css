@@ -296,3 +296,42 @@ details p { padding-right: 1rem; }
   background: var(--ink); color: #fff; font-family: var(--display); font-weight: 600;
   padding: 0.75rem 1.1rem; border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,0.2);
 }
+
+/* "Joining forces" notice */
+.notice {
+  width: min(40rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto;
+  padding: 2.25rem 1.5rem 1.5rem; border: 2px solid var(--ink); border-top: 8px solid var(--blaze); border-radius: 6px;
+  background: var(--surface); color: var(--ink);
+  box-shadow: 0 24px 60px rgba(29, 35, 29, 0.35);
+}
+@media (min-width: 640px) { .notice { padding: 2.75rem 2.5rem 2rem; } }
+.notice::backdrop { background: rgba(29, 35, 29, 0.6); }
+.notice h2 { font-size: clamp(1.5rem, 4.2vw, 2rem); font-weight: 800; line-height: 1.15; margin: 0 2rem 1.25rem 0; text-wrap: balance; }
+.notice h2:focus { outline: none; }
+/* Keep the long domain on one line, shrinking it on narrow screens so it fits. */
+.notice-domain-line { display: block; white-space: nowrap; }
+.notice h2 { margin-bottom: 0.75rem; }
+.notice-lede { font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.35; color: var(--ink); margin: 0 0 1.5rem; text-wrap: balance; }
+.notice-domain { color: var(--blaze-dark); }
+@media (max-width: 639px) {
+  /* Phones: the X sits above the heading, and the domain gets its own line,
+     sized to fit the screen width. */
+  .notice { padding-top: 3.5rem; }
+  .notice h2 { font-size: 1.3rem; margin-right: 0; text-wrap: pretty; }
+  .btn-domain { display: inline-block; white-space: nowrap; font-size: min(1em, calc((100vw - 7rem) / 16)); }
+  .notice-domain-line { font-size: min(1em, calc((100vw - 5.25rem) / 16.2)); }
+  .notice-lede { font-size: 1.0625rem; }
+}
+.notice-go { margin: 0 0 1.5rem; }
+.notice-go .btn { font-size: 1.0625rem; padding: 1em 1.4em 0.9em; width: 100%; text-align: center; }
+@media (min-width: 640px) { .notice-go .btn { width: auto; } }
+.notice-body { font-size: 1rem; line-height: 1.6; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+.notice-body a { overflow-wrap: anywhere; }
+.notice-body strong { font-weight: 600; color: var(--ink); }
+.notice-sign { margin-bottom: 0; color: var(--ink); }
+.notice-close {
+  position: absolute; top: 0.75rem; right: 0.75rem; width: 2.75rem; height: 2.75rem;
+  display: grid; place-items: center; border: 0; border-radius: 50%;
+  background: transparent; color: var(--ink); cursor: pointer;
+}
+.notice-close:hover { background: var(--paper-2); }

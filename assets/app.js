@@ -49,6 +49,24 @@
       "&body=" + encodeURIComponent(shareText);
   }
 
+  /* ---------- "Joining forces" notice ---------- */
+  // Shown on each visit until closed; once closed it stays closed for the
+  // rest of that browser session.
+
+  var notice = $("[data-merge-notice]");
+  if (notice && typeof notice.showModal === "function") {
+    var seen = false;
+    try { seen = sessionStorage.getItem("mergeNoticeClosed") === "1"; } catch (e) {}
+    if (!seen) notice.showModal();
+    notice.addEventListener("close", function () {
+      try { sessionStorage.setItem("mergeNoticeClosed", "1"); } catch (e) {}
+    });
+    $("[data-notice-close]").addEventListener("click", function () { notice.close(); });
+    notice.addEventListener("click", function (ev) {
+      if (ev.target === notice) notice.close(); // click on the dimmed backdrop
+    });
+  }
+
   /* ---------- Mobile menu ---------- */
 
   var menuBtn = $("[data-menu-toggle]");
